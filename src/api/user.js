@@ -1,14 +1,13 @@
 import request from '@/utils/request'
-
-export function login(data) {
+const BASE_URL = '/mode'
+export function login (data) {
   return request({
-    url: '/user/login',
-    method: 'post',
-    data
+    url: `/login?username=${data.username}&password=${data.password}`,
+    method: 'post'
   })
 }
 
-export function getInfo(token) {
+export function getInfo (token) {
   return request({
     url: '/user/info',
     method: 'get',
@@ -16,7 +15,7 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+export function logout () {
   return request({
     url: '/user/logout',
     method: 'post'

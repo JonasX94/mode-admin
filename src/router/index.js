@@ -56,6 +56,21 @@ export const constantRoutes = [
   },
 
   {
+    path: '/product',
+    component: Layout,
+    name: 'product',
+    meta: { title: '产品管理', icon: 'example' },
+    children: [
+      {
+        path: '/product',
+        name: 'product',
+        component: () => import('@/views/product/product.vue'),
+        meta: { title: '产品管理', icon: 'dashboard' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
@@ -172,7 +187,7 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter() {
+export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
