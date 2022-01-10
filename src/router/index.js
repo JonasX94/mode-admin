@@ -66,6 +66,12 @@ export const constantRoutes = [
         name: 'product',
         component: () => import('@/views/product/product.vue'),
         meta: { title: '产品管理', icon: 'dashboard' }
+      },
+      {
+        path: '/edit-product',
+        name: 'edit-product',
+        component: () => import('@/views/product/edit-product.vue'),
+        meta: { title: '编辑产品', icon: 'dashboard' }
       }
     ]
   },
