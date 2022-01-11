@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">登录到 MODE 管理系统  </h3>
       </div>
 
       <el-form-item prop="username">
@@ -53,9 +53,7 @@
         :loading="loading"
         type="primary"
         style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >Login</el-button
-      >
+        @click.native.prevent="handleLogin"> Login </el-button>
 
       <!-- <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -121,9 +119,10 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.loading = true
+            this.$store.dispatch('user/login', this.loginForm).then(res => {
+              console.log(this.$router, res)
+            this.$router.push({ path: 'dashboard' })
             this.loading = false
           }).catch(() => {
             this.loading = false

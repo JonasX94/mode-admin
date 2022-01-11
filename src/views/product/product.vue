@@ -1,16 +1,13 @@
 <template>
-  <div>
+  <div >
     <el-button
       type="primary"
       size="small"
-      @click="$router.push({ name: 'edit-product' })"
-    >
-      新建
-    </el-button>
-    <el-table>
-      <el-table-column prop="name" label="标题" width="180" />
-      <el-table-column prop="picture" label="封面" width="180" />
-      <el-table-column prop="releaseDate" label="发布日期" width="180" />
+      @click="$router.push({ name: 'edit-product' })" >新建</el-button>
+    <el-table class="flex-dp">
+      <el-table-column prop="name" label="标题" />
+      <el-table-column prop="picture" label="封面" />
+      <el-table-column prop="releaseDate" label="发布日期" />
     </el-table>
   </div>
 </template>
@@ -41,5 +38,11 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style >
+.flex-dp {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
 </style>
+
