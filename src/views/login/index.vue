@@ -9,9 +9,8 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">登录到 MODE 管理系统  </h3>
+        <h3 class="title">登录摩得后台 </h3>
       </div>
-
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -53,7 +52,8 @@
         :loading="loading"
         type="primary"
         style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"> Login </el-button>
+        @click.native.prevent="handleLogin"
+      > 登录 </el-button>
 
       <!-- <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -119,9 +119,9 @@ export default {
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-            this.loading = true
-            this.$store.dispatch('user/login', this.loginForm).then(res => {
-              console.log(this.$router, res)
+          this.loading = true
+          this.$store.dispatch('user/login', this.loginForm).then(res => {
+            console.log(this.$router, res)
             this.$router.push({ path: 'dashboard' })
             this.loading = false
           }).catch(() => {
@@ -176,9 +176,9 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
     background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 10px;
     color: #454545;
   }
 }
@@ -192,16 +192,25 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background:url('./bg.jpeg');
+  background-size: cover;
   overflow: hidden;
+  position: relative;
 
   .login-form {
-    position: relative;
-    width: 520px;
+    width: 320px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    // padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -160px;
+    // left: 0; right: 0; top: 0; bottom: 0;
+    // transform: translate(-50%, 50%);
   }
 
   .tips {
