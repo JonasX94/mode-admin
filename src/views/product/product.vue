@@ -1,10 +1,12 @@
 <template>
-  <div >
+  <div class="card-box">
     <el-button
+      style="margin-bottom: 20px"
       type="primary"
-      size="small"
-      @click="$router.push({ name: 'edit-product' })" >新建</el-button>
-    <el-table class="flex-dp">
+      size="mini"
+      @click="$router.push({ name: 'edit-product' })"
+    >新建</el-button>
+    <el-table class="flex-dp" stripe size="small">
       <el-table-column prop="name" label="标题" />
       <el-table-column prop="picture" label="封面" />
       <el-table-column prop="releaseDate" label="发布日期" />
@@ -39,6 +41,9 @@ export default {
 </script>
 
 <style >
+.card-box {
+  padding: 16px;
+}
 .flex-dp {
     display: flex;
     flex: 1;

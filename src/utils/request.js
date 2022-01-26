@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 import router from '../router'
 
 // create an axios instance
@@ -10,12 +10,10 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -43,7 +41,9 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    const headers = response.headers
     const res = response.data
+    const url = response.config.url
     // if the custom code is not 20000, it is judged as an error.
     // console.log(res, 49)
     if (res.code !== '200' && res.code !== 200) {
@@ -52,10 +52,10 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === '503') {
+      if (res.code === '403') {
         // to re-login
+        removeToken()
         router.push({ name: 'login' })
         // MessageBox.confirm('登录超时', 'Confirm logout', {
         //   confirmButtonText: 'Re-Login',
@@ -69,17 +69,25 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return res
+      const jsessionid = headers.jsessionid
+      const params = {
+        ...res,
+        jsessionid
+      }
+      return url === '/mode/login' ? params : res
     }
   }, error => {
-    console.log(error)
-    console.log('err' + error) // for debug
+    const { data } = error.response
+    if (data.code === '403' || data.code === '401') {
+      removeToken()
+      router.push({ path: '/login' })
+    }
     Message({
-      message: error.message,
+      message: data.message || '服务器异常，请稍后重试',
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject(data)
   }
 )
 

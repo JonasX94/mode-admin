@@ -1,8 +1,8 @@
 import request from '@/utils/request'
-const BASE_URL = '/mode'
 export function login (data) {
   return request({
-    url: `/login?username=${data.username}&password=${data.password}`,
+    url: `/login`,
+    data: data,
     method: 'post'
   })
 }
