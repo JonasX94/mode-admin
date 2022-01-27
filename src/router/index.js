@@ -100,6 +100,18 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/customer',
+    component: Layout,
+    children: [
+      {
+        path: 'customer-list',
+        name: 'customer',
+        component: () => import('@/views/customer/customer.vue'),
+        meta: { title: '客户管理', icon: 'form' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

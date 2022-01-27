@@ -121,8 +121,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(res => {
-            console.log(this.$router, res)
-            this.$router.push({ path: 'dashboard' })
+            this.$router.push({ path: 'customer/customer-list' })
             this.loading = false
           }).catch(() => {
             this.loading = false

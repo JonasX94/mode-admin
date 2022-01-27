@@ -53,3 +53,19 @@ export function DelCate (params) {
     data: params
   })
 }
+
+export function customerList (params) {
+  return request({
+    url: '/customer/page',
+    method: 'post',
+    data: params
+  })
+}
+
+export function customerExport (params) {
+  return request({
+    url: '/customer/export',
+    method: 'post',
+    data: params
+  })
+}
