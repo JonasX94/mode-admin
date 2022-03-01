@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     isView () {
-      return this.$route.query.isView === 'isView'
+      return this.$route.query.isView === 'view'
     }
   },
   mounted () {
