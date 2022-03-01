@@ -29,6 +29,13 @@ export function getCateList (params) {
     data: params
   })
 }
+export function getProductCateList (params) {
+  return request({
+    url: '/list/category',
+    method: 'post',
+    data: params
+  })
+}
 
 export function addCate (params) {
   return request({
@@ -65,6 +72,76 @@ export function customerList (params) {
 export function customerExport (params) {
   return request({
     url: '/customer/export',
+    method: 'post',
+    data: params
+  })
+}
+
+export function saveProduct (params) {
+  return request({
+    url: '/product/save',
+    method: 'post',
+    data: params
+  })
+}
+export function updateProduct (params) {
+  return request({
+    url: '/product/update',
+    method: 'post',
+    data: params
+  })
+}
+
+export function productDetail (params) {
+  return request({
+    url: '/product/info/batch/code',
+    method: 'post',
+    data: params
+  })
+}
+
+export function productDel (params) {
+  return request({
+    url: '/product/remove',
+    method: 'post',
+    data: params
+  })
+}
+
+export function articlePage (params) {
+  return request({
+    url: '/article/page',
+    method: 'post',
+    data: params
+  })
+}
+
+export function articleDel (params) {
+  return request({
+    url: '/article/remove',
+    method: 'post',
+    data: params
+  })
+}
+
+export function articleDetail (params) {
+  return request({
+    url: '/article/info/batch/code',
+    method: 'post',
+    data: params
+  })
+}
+export function articleUpdate (params) {
+  return request({
+    url: '/article/update',
+    method: 'post',
+    data: params
+  })
+}
+
+export function articleSave (params) {
+  return request({
+    url: '/article/save',
     method: 'post',
     data: params
   })

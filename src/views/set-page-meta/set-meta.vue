@@ -93,7 +93,6 @@ export default {
   methods: {
     getTableList () {
       getSeoList().then(res => {
-        console.log(res)
         const { data } = res
         this.list = data || []
       })

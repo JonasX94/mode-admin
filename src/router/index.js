@@ -56,7 +56,7 @@ export const constantRoutes = [
   },
 
   {
-    path: '/product',
+    path: '/product-list',
     component: Layout,
     name: 'product',
     meta: { title: '产品管理', icon: 'example' },
@@ -72,6 +72,18 @@ export const constantRoutes = [
         name: 'edit-product',
         component: () => import('@/views/product/edit-product.vue'),
         meta: { title: '编辑产品', icon: 'dashboard' }
+      },
+      {
+        path: '/news',
+        name: 'news',
+        component: () => import('@/views/news/new.vue'),
+        meta: { title: '新闻管理', icon: 'dashboard' }
+      },
+      {
+        path: '/news-detail',
+        name: 'news-detail',
+        component: () => import('@/views/news/edit-new.vue'),
+        meta: { title: '新闻编辑', icon: 'dashboard' }
       }
     ]
   },

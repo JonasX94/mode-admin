@@ -848,6 +848,11 @@
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
+"@tinymce/tinymce-vue@3.2.2":
+  version "3.2.2"
+  resolved "http://npm.nextop.cc:80/@tinymce%2ftinymce-vue/-/tinymce-vue-3.2.2.tgz#a16500fbeebfec4ae43f4e9fe5bd739aeb66a3d6"
+  integrity sha512-LNgKbdaScHHkBsq6UZsMpEL5yPY8oYTGaOX97+ArpJSw4B6KSQpKU+/GHnkytQhPgQLLob+ghejP0ifVQXuczg==
+
 "@types/glob@^7.1.1":
   version "7.2.0"
   resolved "http://npm.nextop.cc:80/@types%2fglob/-/glob-7.2.0.tgz#bc1b5bf3aa92f25bd5dd39f35c57361bdce5b2eb"
@@ -3715,10 +3720,10 @@ electron-to-chromium@^1.4.17:
   resolved "http://npm.nextop.cc:80/electron-to-chromium/-/electron-to-chromium-1.4.46.tgz#c88a6fedc766589826db0481602a888864ade1ca"
   integrity sha512-UtV0xUA/dibCKKP2JMxOpDtXR74zABevuUEH4K0tvduFSIoxRVcYmQsbB51kXsFTX8MmOyWMt8tuZAlmDOqkrQ==
 
-element-ui@2.7.2:
-  version "2.7.2"
-  resolved "http://npm.nextop.cc:80/element-ui/-/element-ui-2.7.2.tgz#8bc5bef5c3c53a2170422516b4324e70069c23d1"
-  integrity sha512-Exh9QTkm9gwMMPzg1TyaTlBKyr3k4K9XcC5vl0A/mneDvJX//RsURGuOWsCNDVQMdhh5h9e+W5icosh+pKfbCg==
+element-ui@2.15.7:
+  version "2.15.7"
+  resolved "http://npm.nextop.cc:80/element-ui/-/element-ui-2.15.7.tgz#9e5f8461edb53cfd89a88614b6caa82bd110ee38"
+  integrity sha1-nl+EYe21PP2JqIYUtsqoK9EQ7jg=
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -10175,6 +10180,11 @@ timsort@^0.3.0:
   version "0.3.0"
   resolved "http://npm.nextop.cc:80/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
+
+tinymce@^5.8.2:
+  version "5.10.3"
+  resolved "http://npm.nextop.cc:80/tinymce/-/tinymce-5.10.3.tgz#9485cf00159fd70c4948cb5e9dd49bce2a775899"
+  integrity sha512-O59ssHNnujWvSk5Gt8hIGrdNCMKVWVQv9F8siAgLTRgTh0t3NDHrP1UlLtCxArUi9DPWZvlBeUz8D5fJTu7vnA==
 
 tmp@^0.0.33:
   version "0.0.33"

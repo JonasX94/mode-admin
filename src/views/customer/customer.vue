@@ -48,7 +48,6 @@ export default {
     },
     getTableList () {
       customerList(this.params).then(res => {
-        console.log(res)
         const { data } = res
         this.params.current = Number(data.current)
         this.params.size = Number(data.size)

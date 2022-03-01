@@ -5,16 +5,37 @@
       type="primary"
       size="mini"
       @click="$router.push({ name: 'edit-product' })"
-    >新建</el-button>
-    <el-table class="flex-dp" stripe size="small">
-      <el-table-column prop="name" label="标题" />
-      <el-table-column prop="picture" label="封面" />
-      <el-table-column prop="releaseDate" label="发布日期" />
+    >创建产品</el-button>
+    <el-table class="flex-dp" stripe size="mini" :data="tableData">
+      <el-table-column prop="code" label="产品编号" />
+      <el-table-column prop="name" label="产品名称" />
+      <el-table-column prop="picture" label="封面">
+        <template slot-scope="scope">
+          <div v-if="scope.row.picture" style="width: 32px;height: 32px"><img style="width: 100%;height: 100%" :src="scope.row.picture" alt=""></div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="categoryName" label="产品类型" />
+      <el-table-column prop="releaseDate" label="操作" width="220">
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
+          <el-popconfirm
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            icon="el-icon-info"
+            icon-color="red"
+            title="确定删除吗？"
+            @confirm="handleDel(scope.row)"
+          >
+            <el-button slot="reference" type="text" size="small">删除</el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-import { getProductList } from '@/api/table.js'
+import { getProductList, productDel } from '@/api/table.js'
 export default {
   name: 'SetMeta',
   data () {
@@ -23,8 +44,9 @@ export default {
         current: 1,
         language: 0,
         online: 0,
-        size: 20
-      }
+        size: 100
+      },
+      tableData: []
     }
   },
   created () {
@@ -33,7 +55,34 @@ export default {
   methods: {
     _getList () {
       getProductList(this.params).then(res => {
-        console.log(res)
+        const { records, total, current } = res.data
+        this.tableData = records || []
+        this.params.total = Number(total)
+        this.params.current = Number(current)
+      })
+    },
+    handleDel (row) {
+      productDel({ id: row.id }).then(res => {
+        this.$message.success(res.msg)
+        this._getList()
+      })
+    },
+    handleEdit (row) {
+      this.$router.push({
+        name: 'edit-product',
+        query: {
+          code: row.code,
+          type: 'edit'
+        }
+      })
+    },
+    handleView (row) {
+      this.$router.push({
+        name: 'edit-product',
+        query: {
+          code: row.code,
+          type: 'view'
+        }
       })
     }
   }
