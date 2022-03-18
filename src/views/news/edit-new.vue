@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     isView () {
-      return this.$route.query.isView === 'view'
+      return this.$route.query.type === 'view'
     }
   },
   mounted () {
@@ -52,7 +52,15 @@ export default {
         const { articles } = res.data
         this.code = code
         this.$refs.zhForm.fromData = articles[0]
+        this.$refs.zhForm.fileList = articles[0].picture ? [{
+          path: articles[0].picture,
+          uid: Math.random()
+        }] : []
         this.$refs.enForm.fromData = articles[1]
+        this.$refs.zhForm.fileList = articles[1].picture ? [{
+          path: articles[1].picture,
+          uid: Math.random()
+        }] : []
       })
     },
     validData () {

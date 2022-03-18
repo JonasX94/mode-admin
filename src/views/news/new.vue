@@ -9,7 +9,11 @@
     <el-table class="flex-dp" stripe size="mini" :data="tableData">
       <el-table-column prop="title" label="标题" />
       <el-table-column prop="subtitle" label="副标题" />
-      <el-table-column prop="picture" label="封面" />
+      <el-table-column prop="picture" label="封面">
+        <template slot-scope="scope">
+          <img v-if="scope.row.picture" :src="scope.row.picture" alt="" style="width: 30px;height: 30px;">
+        </template>
+      </el-table-column>
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
