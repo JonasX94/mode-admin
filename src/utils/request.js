@@ -6,6 +6,7 @@ import router from '../router'
 
 // create an axios instance
 const service = axios.create({
+  // baseURL: process.env.NODE_ENV === 'development' ? process.env.VUE_APP_BASE_API : '/admin/mode', // url = base url + request url
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
@@ -74,7 +75,7 @@ service.interceptors.response.use(
         ...res,
         jsessionid
       }
-      return url === '/mode/login' ? params : res
+      return (url === '/mode/login' || url === '/admin/mode/login') ? params : res
     }
   }, error => {
     const { data } = error.response
