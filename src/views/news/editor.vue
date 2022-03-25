@@ -54,7 +54,7 @@ export default {
       type: [String, Array],
       default () {
         return [
-          'bold italic underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | code | bullist numlist | outdent indent blockquote | undo redo | link unlink | codesample preview'
+          'bold italic image underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | code | bullist numlist | outdent indent blockquote | undo redo | link unlink | codesample preview'
         ]
       }
     }
@@ -74,6 +74,33 @@ export default {
         language_url: '/static/tinymce/zh_CN.js', // 语言包，从开头的 中文文档 站点下载
         language: 'zh_CN', // 语言
         codesample_global_prismjs: true,
+        images_upload_url: `${window.location.origin}/mode/open/file/upload`,
+        // images_upload_base_path: '/',
+        images_upload_handler: function (blobInfo, succFun, failFun) {
+          var xhr, formData
+          var file = blobInfo.blob() // 转化为易于理解的file对象
+          xhr = new XMLHttpRequest()
+          xhr.withCredentials = false
+          xhr.open('POST', `${window.location.origin}/mode/open/file/upload`)
+          xhr.onload = function () {
+            var json
+            if (xhr.status !== 200) {
+              failFun('HTTP Error: ' + xhr.status)
+              return
+            }
+            json = JSON.parse(xhr.responseText)
+            if (!json || typeof json.data !== 'string') {
+              failFun('Invalid JSON: ' + xhr.responseText)
+              return
+            }
+            console.log(json)
+            console.log(blobInfo)
+            succFun(json.data)
+          }
+          formData = new FormData()
+          formData.append('file', file, file.name) // 此处与源文档不一样
+          xhr.send(formData)
+        },
         codesample_languages: [
           { text: 'JavaScript', value: 'js' },
           { text: 'HTML', value: 'html' },

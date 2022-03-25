@@ -31,6 +31,14 @@ export default {
       menuList: [
         {
           meta: {
+            icon: 'form',
+            title: '产品分类'
+          },
+          name: 'category',
+          path: '/product-category/product-category-list'
+        },
+        {
+          meta: {
             title: '产品管理',
             icon: 'dashboard'
           },
@@ -39,19 +47,11 @@ export default {
         },
         {
           meta: {
-            title: 'SEO设置',
+            title: '新闻管理',
             icon: 'form'
           },
-          name: 'seo',
-          path: '/seo/seo-list'
-        },
-        {
-          meta: {
-            icon: 'form',
-            title: '产品分类'
-          },
-          name: 'category',
-          path: '/product-category/product-category-list'
+          name: 'news',
+          path: '/news'
         },
         {
           meta: {
@@ -63,11 +63,11 @@ export default {
         },
         {
           meta: {
-            title: '新闻管理',
+            title: 'SEO设置',
             icon: 'form'
           },
-          name: 'news',
-          path: '/news'
+          name: 'seo',
+          path: '/seo/seo-list'
         }
       ]
     }

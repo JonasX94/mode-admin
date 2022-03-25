@@ -78,14 +78,21 @@
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+      background-color: #fff !important;
 
       &:hover {
-        background-color: $subMenuHover !important;
+        background-color: #fff !important;
       }
     }
   }
-
+.el-menu-item {
+  &:hover {
+    background: #fff !important;
+  }
+  &.is-active {
+    background: #fff !important;
+  }
+}
   .hideSidebar {
     .sidebar-container {
       width: 54px !important;
@@ -185,6 +192,9 @@
     &:hover {
       // you can use $subMenuHover
       background-color: $menuHover !important;
+    }
+    &.is-active {
+      background-color: #fff !important;
     }
   }
 

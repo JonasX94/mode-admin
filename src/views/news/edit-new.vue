@@ -1,13 +1,15 @@
 <template>
   <div class="content-wrap">
-    <el-card class="box-card">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="中文信息" name="zh" />
-        <el-tab-pane label="英文信息" name="en" />
+    <div class="content-dfp">
+      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tab-pane label="中文信息" name="zh">
+          <newsForm v-show="activeName === 'zh'" ref="zhForm" />
+        </el-tab-pane>
+        <el-tab-pane label="英文信息" name="en">
+          <newsForm v-show="activeName === 'en'" ref="enForm" />
+        </el-tab-pane>
       </el-tabs>
-    </el-card>
-    <newsForm v-show="activeName === 'zh'" ref="zhForm" />
-    <newsForm v-show="activeName === 'en'" ref="enForm" />
+    </div>
     <div v-if="!isView" class="footer-btn"><el-button size="samll" @click="$router.push({name: 'news'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button></div>
   </div>
 </template>
@@ -105,11 +107,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.el-card__body {
+  padding: 5px 20px !important;
+}
 .content-wrap {
     display: flex;
-    height: calc(100vh-100px);
+    height: calc(100vh - 100px);
     flex: 1;
+    padding: 0 24px;
+    background-color: #F5F7FA;
     flex-direction: column;
+}
+.content-dfp {
+  height: 100%;
+  overflow-y: scroll;
 }
 .footer-btn {
     width: 100%;
@@ -132,8 +143,5 @@ export default {
   }
 .el-card {
     border: none;
-}
-.el-card__body {
-    padding: 0 20px;
 }
 </style>

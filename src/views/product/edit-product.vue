@@ -1,20 +1,18 @@
 <template>
   <div>
-    <el-card class="box-card">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="中文信息" name="zh" />
-        <el-tab-pane label="英文信息" name="en" />
-        <card :title="'产品基本信息'" />
-        <el-form ref="form" label-width="100px" inline>
+    <div class="content-wrap">
+      <div class="content-dfp">
+        <el-form ref="form" label-width="100px" label-position="top" inline style="background: #fff; margin: 20px 0;padding-top: 15px; padding-left: 40px;">
+          <div class="title-form">产品基本信息</div>
           <el-row :gutter="10">
             <el-col :span="12">
-              <el-form-item label="产品编号" class="is-required">
-                <el-input v-model="code" size="small" maxlength="200" placeholder="请输入产品编号" class="width-500" />
+              <el-form-item label="产品编号" class="is-required" style="width: 400px">
+                <el-input v-model="code" size="small" maxlength="200" placeholder="请输入产品编号" />
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="产品类型" prop="categoryId" class="is-required">
-                <el-select v-model="categoryId" size="small" placeholder="请选择产品类型" class="width-500" style="height:32px">
+              <el-form-item label="产品类型" prop="categoryId" class="is-required" style="width: 600px">
+                <el-select v-model="categoryId" size="small" placeholder="请选择产品类型" style="height:32px">
                   <el-option
                     v-for="item in productTypes"
                     :key="item.id"
@@ -26,24 +24,31 @@
             </el-col>
           </el-row>
         </el-form>
-        <productFrom v-show="activeName === 'zh'" ref="zhForm" :lang="0" />
-        <productFrom v-show="activeName === 'en'" ref="enForm" :lang="1" />
-      </el-tabs>
-    <!-- <div id="editor"></div> -->
-    </el-card>
+        <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+          <el-tab-pane label="中文信息" name="zh">
+            <productFrom v-show="activeName === 'zh'" ref="zhForm" :lang="0" />
+          </el-tab-pane>
+          <el-tab-pane label="英文信息" name="en">
+            <productFrom v-show="activeName === 'en'" ref="enForm" :lang="1" />
+          </el-tab-pane>
+        </el-tabs>
+      <!-- <div id="editor"></div> -->
+      <!-- </el-card> -->
+      </div>
+    </div>
     <div v-if="!isView" class="footer-btn"><el-button size="samll" @click="$router.push({name: 'product-list'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button></div>
   </div>
 </template>
 <script>
 // import wangEditor from 'wangeditor'
 import productFrom from './product-from.vue'
-import card from '../mode-card.vue'
+// import card from '../mode-card.vue'
 import { saveProduct, productDetail, getCateList, updateProduct } from '@/api/table.js'
 export default {
   name: 'EditProduct',
   components: {
-    productFrom,
-    card
+    productFrom
+    // card
   },
   data () {
     return {
@@ -162,11 +167,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box-card {
-  display: flex;
-  flex: 1;
-  height: calc(100vh - 100px);
-  overflow: scroll;
+.el-card__body {
+  padding: 5px 20px !important;
+}
+.content-wrap {
+    display: flex;
+    height: calc(100vh - 100px);
+    flex: 1;
+    padding: 0 24px;
+    background-color: #F5F7FA;
+    flex-direction: column;
+}
+.content-dfp {
+  height: 100%;
+  overflow-y: scroll;
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -202,4 +216,13 @@ export default {
   .el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
     box-shadow: none;
   }
+.title-form {
+  height: 24px;
+  font-family: PingFangSC-Medium;
+  font-size: 16px;
+  color: #333333;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
 </style>

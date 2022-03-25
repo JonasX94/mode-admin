@@ -1,65 +1,60 @@
 <template>
   <div class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      auto-complete="on"
-      label-position="left"
-    >
-      <div class="title-container">
-        <h3 class="title">登录摩得后台 </h3>
-      </div>
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon
-            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+    <div class="login-wrap">
+      <el-form
+        ref="loginForm"
+        :model="loginForm"
+        :rules="loginRules"
+        class="login-form"
+        auto-complete="off"
+        label-position="top"
+      >
+        <div class="title-container">
+          <h3 class="title">登录摩得后台 </h3>
+        </div>
+        <el-form-item prop="username" label="账号">
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="Username"
+            name="username"
+            autocomplete="off"
+            type="text"
+            tabindex="1"
           />
-        </span>
-      </el-form-item>
+        </el-form-item>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-      > 登录 </el-button>
+        <el-form-item prop="password" label="密码">
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="Password"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
+          </span>
+        </el-form-item>
 
-      <!-- <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div> -->
-    </el-form>
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width: 100%; margin-bottom: 30px; height: 56px; background: #3E5E9F;"
+          @click.native.prevent="handleLogin"
+        > 登录 </el-button>
+        <!-- <div class="tips">
+          <span style="margin-right:20px;">username: admin</span>
+          <span> password: any</span>
+        </div> -->
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -136,50 +131,57 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
+.login-wrap {
+  width: 560px;
+  height: 564px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
+  border-radius: 4px;
+  position: absolute;
+  margin: 0 auto;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  margin-top: -282px;
+  margin-left: -280px;
 }
-
+.el-form-item {
+  margin-bottom: 47px;
+}
 /* reset element-ui css */
 .login-container {
   .el-input {
     display: inline-block;
-    height: 47px;
-    width: 85%;
+    height: 32px;
+    width: 464px;
 
     input {
       background: transparent;
-      border: 0px;
+      border: 0px !important;
       -webkit-appearance: none;
       border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
-
+      // padding: 12px 5px 12px 15px;
+      color: #3E5E9F 100%;
+      height: 32px;
+      // caret-color: $cursor;
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
+        box-shadow: 0 0 0px 1000px none inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
   }
-
-  .el-form-item {
-    border: 1px solid #fff;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    color: #454545;
-  }
+}
+.login-form {
+  width: 464px;
+  margin: auto;
+  margin-top: 109px;
 }
 </style>
 
@@ -195,23 +197,6 @@ $light_gray: #eee;
   background-size: cover;
   overflow: hidden;
   position: relative;
-
-  .login-form {
-    width: 320px;
-    max-width: 100%;
-    // padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -150px;
-    margin-left: -160px;
-    // left: 0; right: 0; top: 0; bottom: 0;
-    // transform: translate(-50%, 50%);
-  }
-
   .tips {
     font-size: 14px;
     color: #fff;
@@ -236,18 +221,18 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
+      width: 132px;
+      height: 30px;
+      font-family: PingFangSC-Medium;
+      font-size: 22px;
+      color: #3E5E9F;
+      font-weight: 500;
     }
   }
 
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 7px;
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;
