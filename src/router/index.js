@@ -101,6 +101,18 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/banner',
+    component: Layout,
+    children: [
+      {
+        path: '/banner-list',
+        name: 'banner',
+        component: () => import('@/views/banner/banner.vue'),
+        meta: { title: 'banner管理', icon: 'form' }
+      }
+    ]
+  },
+  {
     path: '/product-category',
     component: Layout,
     children: [

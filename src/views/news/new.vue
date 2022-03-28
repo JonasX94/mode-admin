@@ -14,9 +14,34 @@
           <img v-if="scope.row.picture" :src="scope.row.picture" alt="" style="width: 30px;height: 30px;">
         </template>
       </el-table-column>
+      <el-table-column prop="name" label="状态">
+        <template slot-scope="scope">
+          {{ scope.row.online === 0 ? '上线' : '下线' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.online === 1 || scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-popconfirm
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            icon="el-icon-info"
+            icon-color="red"
+            title="确定发布吗？"
+            @confirm="handlePublish(scope.row)"
+          >
+            <el-button v-if="scope.row.online === 1 || scope.row.online === '1'" type="text" size="small">发布</el-button>
+          </el-popconfirm>
+          <el-popconfirm
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            icon="el-icon-info"
+            icon-color="red"
+            title="确定撤回吗？"
+            @confirm="handleRevoke(scope.row)"
+          >
+            <el-button v-if="scope.row.online === 0 || scope.row.online === '0'" type="text" size="small">撤回</el-button>
+          </el-popconfirm>
           <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
           <el-popconfirm
             confirm-button-text="确认"
@@ -26,7 +51,7 @@
             title="确定删除吗？"
             @confirm="handleDel(scope.row)"
           >
-            <el-button slot="reference" type="text" size="small">删除</el-button>
+            <el-button v-if="scope.row.online === 1 || scope.row.online === '1'" slot="reference" type="text" size="small">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -34,7 +59,7 @@
   </div>
 </template>
 <script>
-import { articlePage, articleDel } from '@/api/table.js'
+import { articlePage, articleDel, articleOnline } from '@/api/table.js'
 export default {
   name: 'SetMeta',
   data () {
@@ -42,7 +67,7 @@ export default {
       params: {
         current: 1,
         language: 0,
-        online: 0,
+        // online: 0,
         size: 100
       },
       tableData: []
@@ -60,8 +85,20 @@ export default {
         this.params.current = Number(current)
       })
     },
-    handleDel (row) {
-      articleDel({ id: row.id }).then(res => {
+    handleDel ({ id, code }) {
+      articleDel({ id, code }).then(res => {
+        this.$message.success(res.msg)
+        this._getList()
+      })
+    },
+    handlePublish (row) {
+      articleOnline({ id: row.id, online: 0 }).then(res => {
+        this.$message.success(res.msg)
+        this._getList()
+      })
+    },
+    handleRevoke (row) {
+      articleOnline({ id: row.id, online: 1 }).then(res => {
         this.$message.success(res.msg)
         this._getList()
       })

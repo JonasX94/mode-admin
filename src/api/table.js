@@ -118,7 +118,14 @@ export function articlePage (params) {
 
 export function articleDel (params) {
   return request({
-    url: '/article/remove',
+    url: '/article/remove/code',
+    method: 'post',
+    data: params
+  })
+}
+export function articleOnline (params) {
+  return request({
+    url: '/article/online',
     method: 'post',
     data: params
   })
@@ -142,6 +149,46 @@ export function articleUpdate (params) {
 export function articleSave (params) {
   return request({
     url: '/article/save',
+    method: 'post',
+    data: params
+  })
+}
+
+export function bannerListFn (params) {
+  return request({
+    url: '/banner/page',
+    method: 'post',
+    data: params
+  })
+}
+
+export function bannerRemove (params) {
+  return request({
+    url: '/banner/remove',
+    method: 'post',
+    data: params
+  })
+}
+
+export function bannerOnline (params) {
+  return request({
+    url: '/banner/online',
+    method: 'post',
+    data: params
+  })
+}
+
+export function bannerSave (params) {
+  return request({
+    url: '/banner/save',
+    method: 'post',
+    data: params
+  })
+}
+
+export function bannerUpdate (params) {
+  return request({
+    url: '/banner/update',
     method: 'post',
     data: params
   })

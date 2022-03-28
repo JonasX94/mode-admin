@@ -62,6 +62,9 @@
         <el-form-item label="产品名称" prop="name" style="width: 600px">
           <el-input v-model="ruleForm.name" :maxlength="128" placeholder="请输入产品名称" />
         </el-form-item>
+        <el-form-item label="描述" prop="description" style="width: 600px">
+          <el-input v-model="ruleForm.description" maxlength="256" placeholder="请输入产品描述" :rows="1" type="textarea" />
+        </el-form-item>
       </el-col>
     </el-row>
     <div class="border-span" style="margin-top: 10px;" />
@@ -80,9 +83,6 @@
     </el-form-item>
     <el-form-item label="封装散热" prop="cool" style="width: 320px">
       <el-input v-model="ruleForm.cool" placeholder="请输入封装散热" :maxlength="50" />
-    </el-form-item>
-    <el-form-item label="描述" prop="description" style="width: 320px">
-      <el-input v-model="ruleForm.description" maxlength="256" placeholder="请输入产品描述" :rows="1" type="textarea" />
     </el-form-item>
     <div class="border-span" style="margin-top: 10px;" />
     <div class="title-form">场景应用 <el-button size="mini" @click="addScenes">添加</el-button></div>
@@ -118,7 +118,7 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      action: `${window.location.origin}/mode/open/file/upload`,
+      action: `${window.location.origin}/mode/oss/upload`,
       disabled: false,
       fileList: [],
       rules: {
@@ -199,12 +199,15 @@ export default {
     onSuccess (file) {
       const { success, data } = file
       if (!success) {
+        this.fileList = []
         return this.$message.warning('上传失败，请重试')
       }
       this.fileList = [
         {
           uid: Math.random(),
-          path: data
+          path: data,
+          url: data,
+          name: 'picture'
         }
       ]
       this.ruleForm.picture = data

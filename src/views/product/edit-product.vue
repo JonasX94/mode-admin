@@ -4,25 +4,19 @@
       <div class="content-dfp">
         <el-form ref="form" label-width="100px" label-position="top" inline style="background: #fff; margin: 20px 0;padding-top: 15px; padding-left: 40px;">
           <div class="title-form">产品基本信息</div>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <el-form-item label="产品编号" class="is-required" style="width: 400px">
-                <el-input v-model="code" size="small" maxlength="200" placeholder="请输入产品编号" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="产品类型" prop="categoryId" class="is-required" style="width: 600px">
-                <el-select v-model="categoryId" size="small" placeholder="请选择产品类型" style="height:32px">
-                  <el-option
-                    v-for="item in productTypes"
-                    :key="item.id"
-                    :label="item.cnName"
-                    :value="item.id"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <el-form-item label="产品编号" class="is-required" style="width: 400px">
+            <el-input v-model="code" size="small" maxlength="200" placeholder="请输入产品编号" />
+          </el-form-item>
+          <el-form-item label="产品类型" prop="categoryId" class="is-required" style="width: 600px">
+            <el-select v-model="categoryId" size="small" placeholder="请选择产品类型" style="height:32px">
+              <el-option
+                v-for="item in productTypes"
+                :key="item.id"
+                :label="item.cnName"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
         </el-form>
         <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
           <el-tab-pane label="中文信息" name="zh">
@@ -32,23 +26,23 @@
             <productFrom v-show="activeName === 'en'" ref="enForm" :lang="1" />
           </el-tab-pane>
         </el-tabs>
-      <!-- <div id="editor"></div> -->
-      <!-- </el-card> -->
       </div>
     </div>
-    <div v-if="!isView" class="footer-btn"><el-button size="samll" @click="$router.push({name: 'product-list'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button></div>
+    <div v-if="!isView" class="footer-btn">
+      <div style="height: 20px; width: 100%" />
+      <div class="btn-wtap">
+        <el-button size="samll" @click="$router.push({name: 'product-list'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-// import wangEditor from 'wangeditor'
 import productFrom from './product-from.vue'
-// import card from '../mode-card.vue'
 import { saveProduct, productDetail, getCateList, updateProduct } from '@/api/table.js'
 export default {
   name: 'EditProduct',
   components: {
     productFrom
-    // card
   },
   data () {
     return {
@@ -96,6 +90,8 @@ export default {
         this.$refs.zhForm.fileList = productInfos[0].picture ? [
           {
             path: productInfos[0].picture,
+            url: productInfos[0].picture,
+            name: 'picture',
             uid: Math.random()
           }
         ] : []
@@ -104,6 +100,8 @@ export default {
         this.$refs.enForm.fileList = productInfos[1].picture ? [
           {
             path: productInfos[1].picture,
+            url: productInfos[1].picture,
+            name: 'picture',
             uid: Math.random()
           }
         ] : []
@@ -140,6 +138,7 @@ export default {
       const enForm = { ...this.$refs.enForm.ruleForm, ...{ language: 1, categoryId: this.categoryId }}
       const params = {
         code: this.code,
+        categoryId: this.categoryId,
         products: [zhForm, enForm]
       }
       if (this.$route.query.code) {
@@ -172,7 +171,7 @@ export default {
 }
 .content-wrap {
     display: flex;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 120px);
     flex: 1;
     padding: 0 24px;
     background-color: #F5F7FA;
@@ -207,11 +206,24 @@ export default {
   }
   .footer-btn {
     width: 100%;
-    height: 50px;
+    height: 70px;
     display: flex;
+    flex-direction: column;
+    background-color: #F5F7FA;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+    // box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+    z-index: 999;
+    .btn-wtap {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      background-color: #fff;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+    }
   }
   .el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
     box-shadow: none;

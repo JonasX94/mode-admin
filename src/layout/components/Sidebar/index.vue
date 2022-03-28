@@ -55,6 +55,14 @@ export default {
         },
         {
           meta: {
+            title: 'Banner管理',
+            icon: 'form'
+          },
+          name: 'banner',
+          path: '/banner-list'
+        },
+        {
+          meta: {
             title: '客户管理',
             icon: 'form'
           },

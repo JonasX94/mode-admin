@@ -1,16 +1,25 @@
 <template>
-  <div class="content-wrap">
-    <div class="content-dfp">
-      <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="中文信息" name="zh">
-          <newsForm v-show="activeName === 'zh'" ref="zhForm" />
-        </el-tab-pane>
-        <el-tab-pane label="英文信息" name="en">
-          <newsForm v-show="activeName === 'en'" ref="enForm" />
-        </el-tab-pane>
-      </el-tabs>
+  <div>
+    <div class="content-wrap">
+      <div class="content-dfp">
+        <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+          <el-tab-pane label="中文信息" name="zh">
+            <newsForm v-show="activeName === 'zh'" ref="zhForm" />
+          </el-tab-pane>
+          <el-tab-pane label="英文信息" name="en">
+            <newsForm v-show="activeName === 'en'" ref="enForm" />
+          </el-tab-pane>
+        </el-tabs>
+      </div>
     </div>
-    <div v-if="!isView" class="footer-btn"><el-button size="samll" @click="$router.push({name: 'news'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button></div>
+    <div v-if="!isView" class="footer-btn">
+      <div style="height: 20px; width: 100%" />
+      <div class="btn-wtap">
+        <el-button size="samll" @click="$router.push({name: 'news'})">取消</el-button>
+        <el-button type="primary" size="samll" @click="validData(1)">保存草稿</el-button>
+        <el-button type="primary" size="samll" @click="validData(0)">发布</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,22 +59,15 @@ export default {
         code: code
       }
       articleDetail(params).then(res => {
-        console.log(res)
         const { articles } = res.data
         this.code = code
-        this.$refs.zhForm.fromData = articles[0]
-        this.$refs.zhForm.fileList = articles[0].picture ? [{
-          path: articles[0].picture,
-          uid: Math.random()
-        }] : []
-        this.$refs.enForm.fromData = articles[1]
-        this.$refs.zhForm.fileList = articles[1].picture ? [{
-          path: articles[1].picture,
-          uid: Math.random()
-        }] : []
+        const zhFormData = articles[0]
+        const enFormData = articles[1]
+        this.$refs.zhForm.setData(zhFormData)
+        this.$refs.enForm.setData(enFormData)
       })
     },
-    validData () {
+    validData (online) {
       const enForm = this.$refs.enForm.getData()
       const zhForm = this.$refs.zhForm.getData()
       if (!zhForm.content || !enForm.content) {
@@ -73,6 +75,7 @@ export default {
       }
       const dataForm = {
         code: this.code,
+        online: online,
         articles: [
           {
             ...zhForm,
@@ -84,7 +87,7 @@ export default {
           }
         ]
       }
-      if (this.isView) {
+      if (this.$route.query.code) {
         articleUpdate(dataForm).then(() => {
           this.$message.success('保存成功')
           this.$router.push({
@@ -112,7 +115,7 @@ export default {
 }
 .content-wrap {
     display: flex;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 120px);
     flex: 1;
     padding: 0 24px;
     background-color: #F5F7FA;
@@ -124,20 +127,25 @@ export default {
 }
 .footer-btn {
     width: 100%;
-    height: 50px;
+    height: 70px;
     display: flex;
+    flex-direction: column;
+    background-color: #F5F7FA;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    transition: none;
-    display: flex;
-    bottom: 0px;
-    box-sizing: border-box;
-    width: 100%!important;
-    transform: none!important;
-    z-index: 1;
-    box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
-}
+    // box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+    z-index: 999;
+    .btn-wtap {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      background-color: #fff;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+    }
+  }
 .el-card.is-always-shadow, .el-card.is-hover-shadow:focus, .el-card.is-hover-shadow:hover {
     box-shadow: none;
   }

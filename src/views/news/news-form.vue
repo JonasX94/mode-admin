@@ -21,6 +21,7 @@
               <div slot="file" slot-scope="{file}">
                 <img
                   class="el-upload-list__item-thumbnail"
+                  style="width: 370px; height: 198px"
                   :src="file.url"
                 >
                 <span class="el-upload-list__item-actions">
@@ -31,7 +32,7 @@
                     <i class="el-icon-zoom-in" />
                   </span>
                   <span
-                    v-if="!$route.query.code"
+                    v-if="$route.query.type === 'edit' || !$route.query.code"
                     class="el-upload-list__item-delete"
                     @click="handleRemove(file)"
                   >
@@ -87,7 +88,7 @@ export default {
   components: { Editor },
   data () {
     return {
-      action: `${window.location.origin}/mode/open/file/upload`,
+      action: `${window.location.origin}/mode/oss/upload`,
       dialogVisible: false,
       fileList: [],
       fromData: {
@@ -109,6 +110,11 @@ export default {
     getData () {
       return this.fromData
     },
+    setData (data) {
+      const { picture } = data
+      this.fileList = picture ? [{ name: 'picture', url: picture, path: picture, uuid: Math.random() }] : []
+      this.fromData = data
+    },
     handleRemove () {
       this.fileList = []
       this.fromData.picture = ''
@@ -126,6 +132,7 @@ export default {
     onSuccess (file) {
       const { success, data } = file
       if (!success) {
+        this.fileList = []
         return this.$message.warning('上传失败，请重试')
       }
       // this.fileList = [

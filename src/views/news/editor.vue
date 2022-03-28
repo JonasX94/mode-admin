@@ -54,7 +54,7 @@ export default {
       type: [String, Array],
       default () {
         return [
-          'bold italic image underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | code | bullist numlist | outdent indent blockquote | undo redo | link unlink | codesample preview'
+          'bold italic image underline strikethrough removeformat | fontsizeselect fontselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | indent | link | preview'
         ]
       }
     }
@@ -63,25 +63,30 @@ export default {
     return {
       init: {
         theme: 'silver', // 主题
+        toolbar_sticky: true,
+        toolbar_persist: true,
         skin_url: '/static/tinymce/skins/ui/oxide', // 皮肤，从node_modules拷贝至/static/tinymce
         content_css: '/static/tinymce/plugins/prism/tomorrow-night.css', // 自定义样式，这里使用prism.js来实现代码高亮，从prism.js官网下载
         height: '500px',
         width: '100%',
-        menubar: true, // 菜单栏
+        menubar: 'insert view format table tools help, images', // 菜单栏
         toolbar: this.toolbar, // 工具栏
+        toolbar_drawer: 'floating',
         elementpath: false,
+        contextmenu: 'bold copy',
+        fixed_toolbar_container: '#mytoolbar',
         branding: false, // 展示技术支持(如由Tiny驱动)
         language_url: '/static/tinymce/zh_CN.js', // 语言包，从开头的 中文文档 站点下载
         language: 'zh_CN', // 语言
         codesample_global_prismjs: true,
-        images_upload_url: `${window.location.origin}/mode/open/file/upload`,
+        images_upload_url: `${window.location.origin}/mode/oss/upload`,
         // images_upload_base_path: '/',
         images_upload_handler: function (blobInfo, succFun, failFun) {
           var xhr, formData
           var file = blobInfo.blob() // 转化为易于理解的file对象
           xhr = new XMLHttpRequest()
           xhr.withCredentials = false
-          xhr.open('POST', `${window.location.origin}/mode/open/file/upload`)
+          xhr.open('POST', `${window.location.origin}/mode/oss/upload`)
           xhr.onload = function () {
             var json
             if (xhr.status !== 200) {

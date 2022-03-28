@@ -9,6 +9,11 @@
     <el-table class="flex-dp" stripe size="mini" :data="tableData">
       <el-table-column prop="code" label="产品编号" />
       <el-table-column prop="name" label="产品名称" />
+      <el-table-column prop="name" label="状态">
+        <template slot-scope="scope">
+          {{ scope.row.online === 0 ? '上线' : '下线' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="picture" label="封面">
         <template slot-scope="scope">
           <div v-if="scope.row.picture" style="width: 32px;height: 32px"><img style="width: 100%;height: 100%" :src="scope.row.picture" alt=""></div>
