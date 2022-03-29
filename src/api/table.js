@@ -108,6 +108,14 @@ export function productDel (params) {
   })
 }
 
+export function productOnline (params) {
+  return request({
+    url: '/product/online',
+    method: 'post',
+    data: params
+  })
+}
+
 export function articlePage (params) {
   return request({
     url: '/article/page',

@@ -11,7 +11,7 @@
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === 0 ? '上线' : '下线' }}
+          {{ scope.row.online === '0'? '上线' : '下线' }}
         </template>
       </el-table-column>
       <el-table-column prop="picture" label="封面">
@@ -22,25 +22,18 @@
       <el-table-column prop="categoryName" label="产品类型" />
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handlePublish(scope.row, 0)">发布</el-button>
+          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handlePublish(scope.row, 1)">撤回</el-button>
           <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
-          <el-popconfirm
-            confirm-button-text="确认"
-            cancel-button-text="取消"
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除吗？"
-            @confirm="handleDel(scope.row)"
-          >
-            <el-button slot="reference" type="text" size="small">删除</el-button>
-          </el-popconfirm>
+          <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-import { getProductList, productDel } from '@/api/table.js'
+import { getProductList, productDel, productOnline } from '@/api/table.js'
 export default {
   name: 'SetMeta',
   data () {
@@ -88,6 +81,12 @@ export default {
           code: row.code,
           type: 'view'
         }
+      })
+    },
+    handlePublish (row, online) {
+      productOnline({ id: row.id, online: online }).then(res => {
+        this.$message.success(res.msg)
+        this._getList()
       })
     }
   }
