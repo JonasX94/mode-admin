@@ -39,7 +39,7 @@
                   <i class="el-icon-zoom-in" />
                 </span>
                 <span
-                  v-if="!$route.query.code"
+                  v-if="$route.query.type === 'edit' || !$route.query.code"
                   class="el-upload-list__item-delete"
                   @click="handleRemove(file)"
                 >
