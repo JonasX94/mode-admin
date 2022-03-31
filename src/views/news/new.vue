@@ -16,14 +16,14 @@
       </el-table-column>
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === '0' ? '上线' : '草稿' }}
+          {{ scope.row.online === '0' ? '上架' : '草稿' }}
         </template>
       </el-table-column>
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handlePublish(scope.row)">发布</el-button>
-          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handleRevoke(scope.row)">撤回</el-button>
+          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handleRevoke(scope.row)">下架</el-button>
           <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
           <el-button v-if="scope.row.online === '1'" slot="reference" type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
         </template>

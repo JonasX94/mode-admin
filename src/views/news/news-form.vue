@@ -71,7 +71,7 @@
       <div class="border-span" />
       <div class="title-form">新闻信息</div>
       <el-form-item label="新闻标题" prop="title" style="width: 600px">
-        <el-input v-model="fromData.title" :rows="1" placeholder="请输入新闻标题" type="textarea" maxlength="120" />
+        <el-input v-model="fromData.title" :rows="3" placeholder="请输入新闻标题" type="textarea" maxlength="120" />
       </el-form-item>
       <el-form-item prop="content" style="width: 100%">
         <div style="width:100%;">

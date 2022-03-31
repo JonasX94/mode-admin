@@ -8,7 +8,6 @@
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -31,7 +30,7 @@ export default {
       menuList: [
         {
           meta: {
-            icon: 'form',
+            icon: 'category',
             title: '产品分类'
           },
           name: 'category',
@@ -40,7 +39,7 @@ export default {
         {
           meta: {
             title: '产品管理',
-            icon: 'dashboard'
+            icon: 'product'
           },
           name: 'product-list',
           path: '/product-list'
@@ -48,7 +47,7 @@ export default {
         {
           meta: {
             title: '新闻管理',
-            icon: 'form'
+            icon: 'news'
           },
           name: 'news',
           path: '/news'
@@ -56,7 +55,7 @@ export default {
         {
           meta: {
             title: 'Banner管理',
-            icon: 'form'
+            icon: 'banner'
           },
           name: 'banner',
           path: '/banner-list'
@@ -64,7 +63,7 @@ export default {
         {
           meta: {
             title: '客户管理',
-            icon: 'form'
+            icon: 'customer'
           },
           name: 'customer',
           path: '/customer/customer-list'
@@ -72,7 +71,7 @@ export default {
         {
           meta: {
             title: 'SEO设置',
-            icon: 'form'
+            icon: 'seo'
           },
           name: 'seo',
           path: '/seo/seo-list'

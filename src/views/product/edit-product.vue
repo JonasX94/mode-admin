@@ -118,10 +118,14 @@ export default {
         }
         zhValid = valid
       })
-      if (!zhValid) return
+      if (!zhValid) {
+        this.activeName = 'zh'
+        return
+      }
       this.$refs.enForm.$refs.ruleForm.validate((valid) => {
         if (!valid) {
           this.$message.warning('产品英文信息有必填项未填写')
+          this.activeName = 'en'
         }
         enValid = valid
       })

@@ -14,7 +14,7 @@
       </el-table-column>
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === '0' ? '上线' : '下线' }}
+          {{ scope.row.online === '0' ? '上架' : '下线' }}
         </template>
       </el-table-column>
       <el-table-column prop="name" label="所属终端">
@@ -26,8 +26,8 @@
         <template slot-scope="scope">
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handlePublish(scope.row)">发布</el-button>
-          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handleRevoke(scope.row)">撤回</el-button>
-          <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
+          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handleRevoke(scope.row)">下架</el-button>
+          <!-- <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button> -->
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -60,7 +60,7 @@
           :limit="1"
         >
           <el-button size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png/视频文件文件，且不超过10MB</div>
+          <div slot="tip" class="el-upload__tip">{{ saveData.terminal === 0 ? 'PC终端请上传1920x600尺寸图' : 'H5终端请上传750x760尺寸图' }} 只能上传jpg/png/视频文件文件，且不超过10MB</div>
         </el-upload>
       </div>
       <div slot="footer">

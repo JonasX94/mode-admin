@@ -62,8 +62,8 @@
         <el-form-item label="产品名称" prop="name" style="width: 600px">
           <el-input v-model="ruleForm.name" :maxlength="128" placeholder="请输入产品名称" />
         </el-form-item>
-        <el-form-item label="描述" prop="description" style="width: 600px">
-          <el-input v-model="ruleForm.description" maxlength="256" placeholder="请输入产品描述" :rows="1" type="textarea" />
+        <el-form-item label="描述" prop="description" style="width: 100%">
+          <el-input v-model="ruleForm.description" maxlength="256" placeholder="请输入产品描述" :rows="3" type="textarea" />
         </el-form-item>
       </el-col>
     </el-row>
@@ -122,8 +122,8 @@ export default {
       disabled: false,
       fileList: [],
       rules: {
-        name: [{ required: true, message: '请输入', trigger: 'blur' }]
-        // qg: [{ required: true, message: '请输入', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入', trigger: 'blur' }],
+        picture: [{ required: true, message: '请上传封面', trigger: 'blur' }]
         // rds: [{ required: true, message: '请输入', trigger: 'blur' }],
         // ids: [{ required: true, message: '请输入', trigger: 'blur' }],
         // vds: [{ required: true, message: '请输入', trigger: 'blur' }],
@@ -202,14 +202,14 @@ export default {
         this.fileList = []
         return this.$message.warning('上传失败，请重试')
       }
-      this.fileList = [
-        {
-          uid: Math.random(),
-          path: data,
-          url: data,
-          name: 'picture'
-        }
-      ]
+      // this.fileList = [
+      //   {
+      //     uid: Math.random(),
+      //     path: data,
+      //     url: data,
+      //     name: 'picture'
+      //   }
+      // ]
       this.ruleForm.picture = data
     }
   }

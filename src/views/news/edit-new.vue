@@ -75,6 +75,7 @@ export default {
       this.$refs.zhForm.$refs.fromData.validate((valid) => {
         if (!valid) {
           this.$message.warning('新闻中文信息有必填项未填写')
+          this.activeName = 'zh'
         }
         zhValid = valid
       })
@@ -82,6 +83,7 @@ export default {
       this.$refs.enForm.$refs.fromData.validate((valid) => {
         if (!valid) {
           this.$message.warning('新闻英文信息有必填项未填写')
+          this.activeName = 'en'
         }
         enValid = valid
       })
