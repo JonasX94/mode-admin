@@ -10,7 +10,7 @@
         <el-table-column prop="mail" label="邮箱" />
       </el-table>
     </div>
-    <div style="height: 50px; display: flex; justify-content: flex-end; padding-top: 10px">
+    <div v-if="list.length > 0" style="height: 50px; display: flex; justify-content: flex-end; padding-top: 10px">
       <el-pagination
         small
         :current-page="params.current"

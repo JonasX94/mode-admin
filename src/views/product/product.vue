@@ -11,7 +11,7 @@
       <el-table-column prop="name" label="产品名称" />
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === '0'? '上线' : '下线' }}
+          {{ scope.row.online === '0'? '上线' : '草稿' }}
         </template>
       </el-table-column>
       <el-table-column prop="picture" label="封面">
@@ -41,7 +41,7 @@ export default {
       params: {
         current: 1,
         language: 0,
-        online: 0,
+        // online: 0,
         size: 100
       },
       tableData: []

@@ -28,10 +28,12 @@
         </el-tabs>
       </div>
     </div>
-    <div v-if="!isView" class="footer-btn">
+    <div class="footer-btn">
       <div style="height: 20px; width: 100%" />
       <div class="btn-wtap">
-        <el-button size="samll" @click="$router.push({name: 'product-list'})">取消</el-button><el-button type="primary" size="samll" @click="validData">保存</el-button>
+        <el-button size="samll" @click="$router.push({name: 'product-list'})">取消</el-button>
+        <el-button v-if="!isView" type="primary" size="samll" @click="validData(1)">保存草稿</el-button>
+        <el-button v-if="!isView" type="primary" size="samll" @click="validData(0)">发布</el-button>
       </div>
     </div>
   </div>
@@ -115,19 +117,20 @@ export default {
           this.$message.warning('产品中文信息有必填项未填写')
         }
         zhValid = valid
-        return
       })
+      if (!zhValid) return
       this.$refs.enForm.$refs.ruleForm.validate((valid) => {
         if (!valid) {
           this.$message.warning('产品英文信息有必填项未填写')
         }
         enValid = valid
       })
+      if (!enValid) return
       if (zhValid && enValid) {
         this.submitData()
       }
     },
-    submitData () {
+    submitData (online) {
       if (!this.code) {
         return this.$message.warning('产品编号必填')
       }
@@ -139,7 +142,8 @@ export default {
       const params = {
         code: this.code,
         categoryId: this.categoryId,
-        products: [zhForm, enForm]
+        products: [zhForm, enForm],
+        online: online
       }
       if (this.$route.query.code) {
         updateProduct(params).then(() => {

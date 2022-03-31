@@ -16,43 +16,16 @@
       </el-table-column>
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === '0' ? '上线' : '下线' }}
+          {{ scope.row.online === '0' ? '上线' : '草稿' }}
         </template>
       </el-table-column>
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-popconfirm
-            confirm-button-text="确认"
-            cancel-button-text="取消"
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定发布吗？"
-            @confirm="handlePublish(scope.row)"
-          >
-            <el-button v-if="scope.row.online === '1'" type="text" size="small">发布</el-button>
-          </el-popconfirm>
-          <el-popconfirm
-            confirm-button-text="确认"
-            cancel-button-text="取消"
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定撤回吗？"
-            @confirm="handleRevoke(scope.row)"
-          >
-            <el-button v-if="scope.row.online === '0'" type="text" size="small">撤回</el-button>
-          </el-popconfirm>
+          <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handlePublish(scope.row)">发布</el-button>
+          <el-button v-if="scope.row.online === '0'" type="text" size="small" @click="handleRevoke(scope.row)">撤回</el-button>
           <el-button type="text" size="small" @click="handleView(scope.row)">查看</el-button>
-          <el-popconfirm
-            confirm-button-text="确认"
-            cancel-button-text="取消"
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除吗？"
-            @confirm="handleDel(scope.row)"
-          >
-            <el-button v-if="scope.row.online === '1'" slot="reference" type="text" size="small">删除</el-button>
-          </el-popconfirm>
+          <el-button v-if="scope.row.online === '1'" slot="reference" type="text" size="small" @click="handleDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

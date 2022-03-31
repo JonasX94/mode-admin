@@ -12,12 +12,12 @@
         </el-tabs>
       </div>
     </div>
-    <div v-if="!isView" class="footer-btn">
+    <div class="footer-btn">
       <div style="height: 20px; width: 100%" />
       <div class="btn-wtap">
         <el-button size="samll" @click="$router.push({name: 'news'})">取消</el-button>
-        <el-button type="primary" size="samll" @click="validData(1)">保存草稿</el-button>
-        <el-button type="primary" size="samll" @click="validData(0)">发布</el-button>
+        <el-button v-if="!isView" type="primary" size="samll" @click="validData(1)">保存草稿</el-button>
+        <el-button v-if="!isView" type="primary" size="samll" @click="validData(0)">发布</el-button>
       </div>
     </div>
   </div>
@@ -70,9 +70,25 @@ export default {
     validData (online) {
       const enForm = this.$refs.enForm.getData()
       const zhForm = this.$refs.zhForm.getData()
-      if (!zhForm.content || !enForm.content) {
-        return this.$message.warning('还有必填项未填写')
-      }
+      let zhValid = true
+      let enValid = true
+      this.$refs.zhForm.$refs.fromData.validate((valid) => {
+        if (!valid) {
+          this.$message.warning('新闻中文信息有必填项未填写')
+        }
+        zhValid = valid
+      })
+      if (!zhValid) return
+      this.$refs.enForm.$refs.fromData.validate((valid) => {
+        if (!valid) {
+          this.$message.warning('新闻英文信息有必填项未填写')
+        }
+        enValid = valid
+      })
+      if (!enValid) return
+      // if (!zhValid || !enValid) {
+      //   return this.$message.warning('还有必填项未填写')
+      // }
       const dataForm = {
         code: this.code,
         online: online,

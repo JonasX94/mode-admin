@@ -73,10 +73,12 @@
       <el-form-item label="新闻标题" prop="title" style="width: 600px">
         <el-input v-model="fromData.title" :rows="1" placeholder="请输入新闻标题" type="textarea" maxlength="120" />
       </el-form-item>
+      <el-form-item prop="content" style="width: 100%">
+        <div style="width:100%;">
+          <Editor ref="tinyEditor" :value="fromData.content" @input="(res)=> fromData.content=res" />
+        </div>
+      </el-form-item>
     </el-form>
-    <div style="width:98%;">
-      <Editor ref="tinyEditor" :value="fromData.content" @input="(res)=> fromData.content=res" />
-    </div>
   </div>
 </template>
 
@@ -102,7 +104,8 @@ export default {
       },
       rules: {
         picture: [{ required: true, message: '请上传新闻图片', trigger: 'blur' }],
-        title: [{ required: true, message: '请输入新闻标题', trigger: 'blur' }]
+        title: [{ required: true, message: '请输入新闻标题', trigger: 'blur' }],
+        content: [{ required: true, message: '请输入新闻内容', trigger: 'blur' }]
       }
     }
   },

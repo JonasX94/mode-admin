@@ -4,7 +4,7 @@
       style="margin-bottom: 20px"
       type="primary"
       size="mini"
-      @click="dialogVisible = true"
+      @click="open"
     >上传Banner</el-button>
     <el-table class="flex-dp" stripe size="mini" :data="tableData">
       <el-table-column prop="picture" label="封面">
@@ -14,12 +14,12 @@
       </el-table-column>
       <el-table-column prop="name" label="状态">
         <template slot-scope="scope">
-          {{ scope.row.online === 0 ? '上线' : '下线' }}
+          {{ scope.row.online === '0' ? '上线' : '下线' }}
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="所属设备">
+      <el-table-column prop="name" label="所属终端">
         <template slot-scope="scope">
-          {{ scope.row.online === 0 ? 'PC' : 'H5' }}
+          {{ scope.row.online === '0' ? 'PC' : 'H5' }}
         </template>
       </el-table-column>
       <el-table-column prop="releaseDate" label="操作" width="220">
@@ -33,6 +33,7 @@
       </el-table-column>
     </el-table>
     <el-dialog
+      v-if="dialogVisible"
       title="创建"
       :visible.sync="dialogVisible"
       width="800px"
@@ -45,8 +46,8 @@
               <el-radio :label="1">H5</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="所属终端">
-            <el-input-number v-model.number="saveData.sort" :min="1" :max="100" size="small" label="请输入排序值" />
+          <el-form-item label="排序值">
+            <el-input v-model.number="saveData.sort" :min="1" :max="100" size="small" label="请输入排序值" />
           </el-form-item>
         </el-form>
         <el-upload
@@ -99,6 +100,10 @@ export default {
     this._getList()
   },
   methods: {
+    open () {
+      this.fileList = []
+      this.dialogVisible = true
+    },
     saveDataFn (data) {
       if (!this.saveData.picture) return
       const params = { ...this.saveData, ...{ online: data }}
@@ -162,6 +167,7 @@ export default {
     },
     handlePublish (row) {
       bannerOnline({ id: row.id, online: 0 }).then(res => {
+        console.log(res)
         this.$message.success(res.msg)
         this._getList()
       })
