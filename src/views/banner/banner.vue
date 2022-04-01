@@ -19,9 +19,10 @@
       </el-table-column>
       <el-table-column prop="name" label="所属终端">
         <template slot-scope="scope">
-          {{ scope.row.online === '0' ? 'PC' : 'H5' }}
+          {{ scope.row.terminal === '0' ? 'PC' : 'H5' }}
         </template>
       </el-table-column>
+      <el-table-column prop="sort" label="排序" />
       <el-table-column prop="releaseDate" label="操作" width="220">
         <template slot-scope="scope">
           <el-button v-if="scope.row.online === '1'" type="text" size="small" @click="handleEdit(scope.row)">编辑</el-button>
