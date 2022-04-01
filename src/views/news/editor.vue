@@ -27,6 +27,7 @@ import 'tinymce/plugins/wordcount'
 import 'tinymce/plugins/preview'
 import 'tinymce/plugins/fullpage'
 import 'tinymce/plugins/fullscreen'
+import { removeToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -94,12 +95,13 @@ export default {
               return
             }
             json = JSON.parse(xhr.responseText)
-            if (!json || typeof json.data !== 'string') {
-              failFun('Invalid JSON: ' + xhr.responseText)
+            if (json.code === '403' || json.code === '401') {
+              this.goLogin()
+            }
+            if (!json || typeof json.data !== 'string' || !json.success) {
+              failFun(json.msg)
               return
             }
-            console.log(json)
-            console.log(blobInfo)
             succFun(json.data)
           }
           formData = new FormData()
@@ -137,6 +139,10 @@ export default {
     tinymce.init({})
   },
   methods: {
+    goLogin () {
+      removeToken()
+      this.$router.push({ path: '/login' })
+    },
     getText () {
       const activeEditor = tinymce.activeEditor
       const editBody = activeEditor.getBody()

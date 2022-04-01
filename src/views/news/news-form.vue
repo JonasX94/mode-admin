@@ -133,10 +133,11 @@ export default {
       return this.$message.error('封面只能上传一张')
     },
     onSuccess (file) {
-      const { success, data } = file
+      const { success, data, msg } = file
       if (!success) {
         this.fileList = []
-        return this.$message.warning('上传失败，请重试')
+
+        return this.$message.warning(msg)
       }
       // this.fileList = [
       //   {
